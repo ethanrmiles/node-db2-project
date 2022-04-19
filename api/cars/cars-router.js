@@ -13,7 +13,13 @@ router.get('/', (req,res) => {
 })
 
 router.get('/:id', (req,res) => {
-    
+    Cars.getById(req.params.id)
+    .then(car => {
+        res.json(car)
+    })
+    .catch(err => {
+        res.status(404).json({ message: `failed to retreive car with that id ${err.message}`})
+    })
 })
 
 router.post('/', (req,res) => {
