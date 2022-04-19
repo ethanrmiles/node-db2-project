@@ -12,18 +12,16 @@ router.get('/', (req,res) => {
         })
 })
 
-router.get('/:id', (req,res) => {
-    Cars.getById(req.params.id)
-    .then(car => {
-        res.json(car)
-    })
-    .catch(err => {
-        res.status(404).json({ message: `failed to retreive car with that id ${err.message}`})
-    })
+router.get('/:id', md.checkCarId, async(req,res,next) => {
+    res.json(req.car)
 })
 
 router.post('/', (req,res) => {
     
+})
+
+router.use((err, req, res, next) => {
+    res.status(err.status || 500).json({ message: err.message})
 })
 
 module.exports = router;
